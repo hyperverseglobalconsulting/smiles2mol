@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SMILES to Image</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 20px; }
+        #result { margin-top: 20px; }
+        img { max-width: 100%; }
+    </style>
+</head>
+<body>
+    <h2>SMILES to Image Converter</h2>
+    <input type="text" id="smiles" placeholder="Enter SMILES (e.g., CCO)" value="CCO">
+    <button onclick="convert()">Convert</button>
+    <div id="result"></div>
+
+    <script>
+        async function convert() {
+            const smiles = document.getElementById('smiles').value.trim();
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '<div class="loading">Processing...</div>';
+
+            try {
+                // Validate input
+                if (!smiles) {
+                    throw new Error('Please enter a SMILES string');
+                }
+
+                // Make API request
+                const response = await fetch('https://projects.vizeet.me/smiles2mol', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'image/jpeg'
+                    },
+                    body: JSON.stringify({ smiles: smiles })
+                });
+
+                // Handle response
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`API Error: ${response.status} - ${errorText}`);
+                }
+
+                // Display image
+                const blob = await response.blob();
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(blob);
+                resultDiv.innerHTML = '';
+                resultDiv.appendChild(img);
+
+            } catch (err) {
+                resultDiv.innerHTML = `<div class="error">❌ Error: ${err.message}</div>`;
+                console.error('Conversion error:', err);
+            }
+        }
+    </script>
+</body>
+</html>

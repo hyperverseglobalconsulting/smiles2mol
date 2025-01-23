@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMILES to Molecule Visualization | Portfolio</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --light: #ecf0f1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem 0;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        section {
+            background: white;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .demo-interface {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        #molecule-display {
+            border: 2px solid var(--secondary);
+            padding: 1rem;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input, button {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 100%;
+        }
+
+        button {
+            background-color: var(--secondary);
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .tech-stack {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tech-item {
+            background: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .screenshot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .architecture-diagram {
+            max-width: 800px;
+            margin: 2rem auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SMILES to Molecule Visualization</h1>
+        <p>Chemical Structure Visualization Web Service</p>
+    </header>
+
+    <section>
+        <h2>Project Overview</h2>
+        <div class="overview-content">
+            <h3>Serverless SMILES Visualization Server</h3>
+            <p>A demonstration of AWS serverless integration featuring:</p>
+            
+            <div class="architecture-diagram">
+                <img src="smiles2mol-arch-diagram.png" alt="System Architecture" style="max-width: 800px;">
+            </div>
+
+            <div class="system-components">
+                <div class="component">
+                    <h4>Frontend</h4>
+                    <ul>
+                        <li>Static HTML/JavaScript hosted on GitHub Pages</li>
+                        <li>Simple form interface with image display</li>
+                        <li>Zero-cost hosting solution</li>
+                    </ul>
+                </div>
+
+                <div class="component">
+                    <h4>Backend</h4>
+                    <ul>
+                        <li>AWS API Gateway with custom domain (projects.vizeet.me)</li>
+                        <li>Lambda function for SMILES processing</li>
+                        <li>ACM-managed SSL certificates</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 1: Static Website -->
+    <div class="architecture-section">
+        <h2>1. Static Web Hosting</h2>
+        <div class="mermaid diagram">
+            graph LR
+            A[GitHub Repository] --> B[GitHub Pages]
+            B --> C[User's Browser]
+        </div>
+        <p><strong>Implementation:</strong></p>
+        <ul>
+            <li>HTML/CSS/JS files stored in GitHub repository</li>
+            <li>Automatic deployment via GitHub Pages</li>
+            <li>Zero-configuration HTTPS provided by GitHub</li>
+        </ul>
+    </div>
+
+    <!-- Part 2: Serverless Processing -->
+    <div class="architecture-section">
+        <h2>2. SMILES Processing Pipeline</h2>
+        <div class="mermaid diagram">
+            graph LR
+            U[Web Interface] -->|POST Request| G[API Gateway]
+            G -->|Invoke| L[Lambda Function]
+            L -->|Process| R[RDKit/Python]
+            R -->|Return| G
+            G -->|JPEG Response| U
+        </div>
+        <p><strong>Components:</strong></p>
+        <pre>
+API Gateway Configuration:
+- REST API type
+- POST method integration
+- Lambda proxy integration
+- Request validation
+- CORS headers configuration
+
+Lambda Function:
+- Python 3.12 runtime
+- RDKit library layer
+- Handler function:
+    def lambda_handler(event, context):
+        smiles = event['body']['smiles']
+        # Processing logic
+        return {
+            'statusCode': 200,
+            'headers': {'Content-Type': 'image/jpeg'},
+            'body': base64_image
+        }
+        </pre>
+    </div>
+
+    <!-- Part 3: Custom Domain Setup -->
+    <div class="architecture-section">
+        <h2>3. Domain & Certificate Management</h2>
+        <div class="mermaid diagram">
+            sequenceDiagram
+            participant A as ACM
+            participant B as API Gateway
+            participant C as Route53
+            A->>A: Request Certificate
+            A->>B: Associate with API Gateway
+            B->>C: Create CNAME Record
+            C->>B: Domain Validation
+        </div>
+        <p><strong>Implementation Steps:</strong></p>
+        <ol>
+            <li>Request public certificate in ACM (us-east-1 region)</li>
+            <li>Create API Gateway custom domain:
+                <pre>Domain name: api.projects.vizeet.me
+Base path: /
+Stage: production</pre>
+            </li>
+            <li>Create Route53 CNAME record:
+                <pre>Type: CNAME
+Name: api.projects.vizeet.me
+Value: [API Gateway DNS name]</pre>
+            </li>
+        </ol>
+    </div>
+
+    <!-- Technologies Used -->
+    <section>
+        <h2>Technologies Used</h2>
+        <div class="tech-stack">
+            <span class="tech-item">AWS Lambda</span>
+            <span class="tech-item">API Gateway</span>
+            <span class="tech-item">Python</span>
+            <span class="tech-item">RDKit</span>
+            <span class="tech-item">JavaScript</span>
+            <span class="tech-item">GitHub Pages</span>
+        </div>
+    </section>
+
+    <!-- Live Demo -->
+    <section>
+        <h2>Interactive Demo</h2>
+        <div class="demo-interface">
+            <div>
+                <input type="text" id="smiles-input" placeholder="Enter SMILES (e.g., CCO)" value="CCO">
+                <button onclick="convertSmiles()">Generate Structure</button>
+                <div id="error-message" style="color: red; margin-top: 1rem;"></div>
+            </div>
+            <div id="molecule-display">
+                <p>Your molecule will appear here</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture -->
+    <section>
+        <h2>System Architecture</h2>
+        <div class="architecture-diagram">
+            <!-- Add your architecture diagram here -->
+            <pre>
+┌─────────────┐       ┌─────────────┐       ┌─────────────┐
+│   Client    │──────▶│ API Gateway │──────▶│ AWS Lambda  │
+└─────────────┘       └─────────────┘       └─────────────┘
+                            ▲                     │
+                            │                     ▼
+                            │               ┌─────────────┐
+                            └────────────────┤   RDKit     │
+                                            └─────────────┘
+            </pre>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section>
+        <h2>Implementation Highlights</h2>
+        <div class="screenshot-grid">
+            <figure>
+                <img src="screenshot1.jpg" alt="API Response Example" style="width:100%">
+                <figcaption>Fig 1: Successful molecule generation</figcaption>
+            </figure>
+            <figure>
+                <img src="screenshot2.jpg" alt="Error Handling" style="width:100%">
+                <figcaption>Fig 2: Input validation and error handling</figcaption>
+            </figure>
+        </div>
+    </section>
+
+    <script>
+        async function convertSmiles() {
+            const smiles = document.getElementById('smiles-input').value;
+            const display = document.getElementById('molecule-display');
+            const errorMsg = document.getElementById('error-message');
+            
+            errorMsg.textContent = '';
+            display.innerHTML = '<div class="loader"></div>';
+
+            try {
+                const response = await fetch('https://projects.vizeet.me/smiles2mol', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'image/jpeg'
+                    },
+                    body: JSON.stringify({ smiles: smiles })
+                });
+
+                if (!response.ok) throw new Error(`API Error: ${response.status}`);
+                
+                const blob = await response.blob();
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(blob);
+                img.style.maxWidth = '100%';
+                
+                display.innerHTML = '';
+                display.appendChild(img);
+            } catch (error) {
+                errorMsg.textContent = `Error: ${error.message}`;
+                display.innerHTML = '<p>Molecule display failed</p>';
+            }
+        }
+    </script>
+</body>
+</html>
