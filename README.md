@@ -6,7 +6,7 @@
 [![AWS API Gateway](https://img.shields.io/badge/Endpoint-API%20Gateway-orange)](https://projects.vizeet.me/smiles2mol)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
-![Architecture Diagram](architecture.png) <!-- Add your architecture diagram -->
+![Architecture Diagram]([architecture.png](smiles2mol-arch-diagram.png) <!-- Add your architecture diagram -->
 
 ---
 
