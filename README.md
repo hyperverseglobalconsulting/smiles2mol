@@ -61,6 +61,7 @@ graph TD
 2. **API Gateway**: Configure custom domain with certificate
 3. **Route53**: Create CNAME record pointing to API Gateway DNS
 
+```mermaid
 sequenceDiagram 
   participant A as ACM
   participant B as API Gateway
@@ -69,6 +70,7 @@ sequenceDiagram
   A->>B: Associate with API Gateway
   B->>C: Create CNAME Record
   C->>B: Domain Validation
+```
 
 ## 🛠️ Implementation
 
