@@ -131,86 +131,6 @@
         </div>
     </section>
 
-    <!-- Part 1: Static Website -->
-    <div class="architecture-section">
-        <h2>1. Static Web Hosting</h2>
-        <div class="mermaid diagram">
-            graph LR
-            A[GitHub Repository] --> B[GitHub Pages]
-            B --> C[User's Browser]
-        </div>
-        <p><strong>Implementation:</strong></p>
-        <ul>
-            <li>HTML/CSS/JS files stored in GitHub repository</li>
-            <li>Automatic deployment via GitHub Pages</li>
-            <li>Zero-configuration HTTPS provided by GitHub</li>
-        </ul>
-    </div>
-
-    <!-- Part 2: Serverless Processing -->
-    <div class="architecture-section">
-        <h2>2. SMILES Processing Pipeline</h2>
-        <div class="mermaid diagram">
-            graph LR
-            U[Web Interface] -->|POST Request| G[API Gateway]
-            G -->|Invoke| L[Lambda Function]
-            L -->|Process| R[RDKit/Python]
-            R -->|Return| G
-            G -->|JPEG Response| U
-        </div>
-        <p><strong>Components:</strong></p>
-        <pre>
-API Gateway Configuration:
-- REST API type
-- POST method integration
-- Lambda proxy integration
-- Request validation
-- CORS headers configuration
-
-Lambda Function:
-- Python 3.12 runtime
-- RDKit library layer
-- Handler function:
-    def lambda_handler(event, context):
-        smiles = event['body']['smiles']
-        # Processing logic
-        return {
-            'statusCode': 200,
-            'headers': {'Content-Type': 'image/jpeg'},
-            'body': base64_image
-        }
-        </pre>
-    </div>
-
-    <!-- Part 3: Custom Domain Setup -->
-    <div class="architecture-section">
-        <h2>3. Domain & Certificate Management</h2>
-        <div class="mermaid diagram">
-            sequenceDiagram
-            participant A as ACM
-            participant B as API Gateway
-            participant C as Route53
-            A->>A: Request Certificate
-            A->>B: Associate with API Gateway
-            B->>C: Create CNAME Record
-            C->>B: Domain Validation
-        </div>
-        <p><strong>Implementation Steps:</strong></p>
-        <ol>
-            <li>Request public certificate in ACM (us-east-1 region)</li>
-            <li>Create API Gateway custom domain:
-                <pre>Domain name: api.projects.vizeet.me
-Base path: /
-Stage: production</pre>
-            </li>
-            <li>Create Route53 CNAME record:
-                <pre>Type: CNAME
-Name: api.projects.vizeet.me
-Value: [API Gateway DNS name]</pre>
-            </li>
-        </ol>
-    </div>
-
     <!-- Technologies Used -->
     <section>
         <h2>Technologies Used</h2>
@@ -219,7 +139,6 @@ Value: [API Gateway DNS name]</pre>
             <span class="tech-item">API Gateway</span>
             <span class="tech-item">Python</span>
             <span class="tech-item">RDKit</span>
-            <span class="tech-item">JavaScript</span>
             <span class="tech-item">GitHub Pages</span>
         </div>
     </section>
@@ -236,39 +155,6 @@ Value: [API Gateway DNS name]</pre>
             <div id="molecule-display">
                 <p>Your molecule will appear here</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Architecture -->
-    <section>
-        <h2>System Architecture</h2>
-        <div class="architecture-diagram">
-            <!-- Add your architecture diagram here -->
-            <pre>
-┌─────────────┐       ┌─────────────┐       ┌─────────────┐
-│   Client    │──────▶│ API Gateway │──────▶│ AWS Lambda  │
-└─────────────┘       └─────────────┘       └─────────────┘
-                            ▲                     │
-                            │                     ▼
-                            │               ┌─────────────┐
-                            └────────────────┤   RDKit     │
-                                            └─────────────┘
-            </pre>
-        </div>
-    </section>
-
-    <!-- Screenshots -->
-    <section>
-        <h2>Implementation Highlights</h2>
-        <div class="screenshot-grid">
-            <figure>
-                <img src="screenshot1.jpg" alt="API Response Example" style="width:100%">
-                <figcaption>Fig 1: Successful molecule generation</figcaption>
-            </figure>
-            <figure>
-                <img src="screenshot2.jpg" alt="Error Handling" style="width:100%">
-                <figcaption>Fig 2: Input validation and error handling</figcaption>
-            </figure>
         </div>
     </section>
 
