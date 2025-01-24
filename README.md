@@ -26,7 +26,7 @@ A cloud-native tool to convert SMILES strings into 2D molecular structures:
   - HTML/JavaScript for UI
   - Simple form interface with image display
   - Fetches data from AWS API Gateway
-- **URL**: [https://hyperverseglobalconsulting.github.io/smiles2mol/](https://hyperverseglobalconsulting.github.io/smiles2mol/)
+- **URL**: [https://hyperverseglobalconsulting.github.io/smiles2mol/webpage.html](https://hyperverseglobalconsulting.github.io/smiles2mol/webpage.html)
 
 ### Backend
 - **API Gateway**: 
