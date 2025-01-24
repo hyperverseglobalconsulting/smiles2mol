@@ -78,7 +78,7 @@ sequenceDiagram
 ```bash
 # Clone repository
 git clone https://github.com/hyperverseglobalconsulting/smiles2mol.git
-
+```
 # Enable GitHub Pages:
 1. Go to Repository Settings → Pages
 2. Select branch (main/master) and root folder
