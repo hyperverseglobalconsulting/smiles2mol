@@ -2,7 +2,7 @@
 
 **Convert SMILES notation to molecular structures with serverless AWS backend and GitHub Pages frontend.**
 
-[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-blue?logo=github)](https://hyperverseglobalconsulting.github.io/smiles2mol/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-blue?logo=github)](https://hyperverseglobalconsulting.github.io/smiles2mol/webpage.html)
 [![AWS API Gateway](https://img.shields.io/badge/Endpoint-API%20Gateway-orange)](https://projects.vizeet.me/smiles2mol)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
