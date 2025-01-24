@@ -53,7 +53,7 @@ graph TD
   A[User] -->|SMILES Input| B[GitHub Pages]
   B -->|API Request| C[AWS API Gateway]
   C -->|Trigger| D[Lambda Function]
-  D -->|RDKit Processing| E[Return SVG/PNG]
+  D -->|RDKit Processing| E[Return JPG]
   E -->|Display| B
 ```
 ### 3. Domain & Certificate Management
