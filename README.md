@@ -39,6 +39,15 @@ A cloud-native tool to convert SMILES strings into 2D molecular structures:
   - Deployed with AWS CDK/CloudFormation
   - Auto-scaling and pay-per-use pricing
 
+## 🌐 Architecture
+
+### 1. Static Web Hosting
+```mermaid
+graph LR 
+  A[GitHub Repository] --> B[GitHub Pages]
+  B --> C[User's Browser]
+```
+### 2. Backend Processing Pipeline
 ```mermaid
 graph TD
   A[User] -->|SMILES Input| B[GitHub Pages]
@@ -46,3 +55,29 @@ graph TD
   C -->|Trigger| D[Lambda Function]
   D -->|RDKit Processing| E[Return SVG/PNG]
   E -->|Display| B
+```
+### 3. Domain & Certificate Management
+1. **ACM Certificate**: Request SSL certificate for `projects.vizeet.me` (us-east-2 region)
+2. **API Gateway**: Configure custom domain with certificate
+3. **Route53**: Create CNAME record pointing to API Gateway DNS
+
+sequenceDiagram 
+  participant A as ACM
+  participant B as API Gateway
+  participant C as Route53
+  A->>A: Request Certificate
+  A->>B: Associate with API Gateway
+  B->>C: Create CNAME Record
+  C->>B: Domain Validation
+
+## 🛠️ Implementation
+
+### Frontend (Static Hosting)
+```bash
+# Clone repository
+git clone https://github.com/hyperverseglobalconsulting/smiles2mol.git
+
+# Enable GitHub Pages:
+1. Go to Repository Settings → Pages
+2. Select branch (main/master) and root folder
+3. Enforce HTTPS
