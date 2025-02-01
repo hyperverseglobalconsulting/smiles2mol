@@ -35,9 +35,6 @@ A cloud-native tool to convert SMILES strings into 2D molecular structures:
 - **Lambda Function**:
   - Python-based SMILES processing
   - Uses RDKit for molecular structure generation
-- **Infrastructure**:
-  - Deployed with AWS CDK/CloudFormation
-  - Auto-scaling and pay-per-use pricing
 
 ## 🌐 Architecture
 
